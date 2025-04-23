@@ -14,7 +14,7 @@ VALID_VIDEO_EXTENSIONS = ('.mp4', '.avi', '.mov', '.mkv')
 
 # --- Parámetros de Detección ---
 # Ajustar estos rangos según la iluminación y el color exacto de la pelota
-LOWER_WHITE_HSV = np.array([0, 20, 170], dtype=np.uint8) # Aumentado V minimo
+LOWER_WHITE_HSV = np.array([0, 10, 170], dtype=np.uint8) # Aumentado V minimo
 UPPER_WHITE_HSV = np.array([180, 60, 255], dtype=np.uint8) # Aumentado S maximo un poco
 # Ajustar áreas según el tamaño de la pelota en el video
 MIN_CONTOUR_AREA = 80   # Reducido ligeramente por si la pelota está lejos
