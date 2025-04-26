@@ -15,3 +15,6 @@ VENV/
 
 # Ignorar archivos de log
 *.log
+
+# Ignorar carpeta salida
+salida/

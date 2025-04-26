@@ -14,7 +14,7 @@ from programa.config import (GAUSSIAN_BLUR_KERNEL_SIZE, MORPH_ITERATIONS, DISPLA
     FONT_COLOR_NOT_DETECTED, FONT_THICKNESS, CIRCLE_COLOR, CIRCLE_THICKNESS,
     OUTPUT_VIDEO_CODEC, OUTPUT_VIDEO_EXTENSION,
     # Parámetros Blob Detector
-    FILTER_BY_COLOR, BLOB_COLOR, LOWER_YELLOW_HSV, UPPER_YELLOW_HSV,
+    FILTER_BY_COLOR, BLOB_COLOR, LOWER_HSV, UPPER_HSV,
     FILTER_BY_AREA, MIN_AREA, MAX_AREA,
     FILTER_BY_CIRCULARITY, MIN_CIRCULARITY, MAX_CIRCULARITY,
     FILTER_BY_CONVEXITY, MIN_CONVEXITY, MAX_CONVEXITY,
@@ -93,7 +93,7 @@ class BallTracker:
         print(f"  Filter by Convexity: {params.filterByConvexity} (Min: {params.minConvexity}, Max: {params.maxConvexity})")
         print(f"  Filter by Inertia: {params.filterByInertia} (Min: {params.minInertiaRatio}, Max: {params.maxInertiaRatio})")
         if FILTER_BY_COLOR:
-             print(f"  Usando máscara HSV con rango: {LOWER_YELLOW_HSV} a {UPPER_YELLOW_HSV}")
+             print(f"  Usando máscara HSV con rango: {LOWER_HSV} a {UPPER_HSV}")
 
 
     def _setup_video_capture(self, video_path):
@@ -130,7 +130,7 @@ class BallTracker:
         # Crear máscara HSV si se eligió filtrar por color
         if FILTER_BY_COLOR:
             hsv = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
-            mask = cv2.inRange(hsv, LOWER_YELLOW_HSV, UPPER_YELLOW_HSV)
+            mask = cv2.inRange(hsv, LOWER_HSV, UPPER_HSV)
 
             # Limpiar la máscara con operaciones morfológicas
             kernel = np.ones((5,5),np.uint8)
