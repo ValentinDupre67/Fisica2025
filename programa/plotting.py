@@ -1,21 +1,25 @@
 # plotting.py
 """
-Funciones para generar gráficos de los datos cinemáticos usando Matplotlib.
+Funciones para generar y guardar gráficos de los datos cinemáticos usando Matplotlib.
 """
 import matplotlib.pyplot as plt
-import pandas as pd # Solo para type hinting si se usa
+import pandas as pd
+import os
 
-def plot_kinematics(df: pd.DataFrame):
+def plot_kinematics(df: pd.DataFrame, output_folder: str, base_filename: str):
     """
-    Genera y muestra gráficos de posición, velocidad y aceleración.
+    Genera y guarda gráficos de posición, velocidad y aceleración en formato PNG.
 
     Args:
-        df (pd.DataFrame): DataFrame que contiene los datos cinemáticos
-                           (time, x, y, vx, vy, ax, ay).
+        df (pd.DataFrame): DataFrame con los datos cinemáticos.
+        output_folder (str): Carpeta donde guardar las imágenes.
+        base_filename (str): Nombre base de los archivos de salida.
     """
     if df.empty:
         print("DataFrame vacío, no se pueden generar gráficos.")
         return
+
+    os.makedirs(output_folder, exist_ok=True)
 
     # --- Gráfico de Posición ---
     fig_pos, axs_pos = plt.subplots(1, 2, figsize=(12, 5), sharex=True)
@@ -33,8 +37,11 @@ def plot_kinematics(df: pd.DataFrame):
     axs_pos[1].grid(True)
     axs_pos[1].legend()
 
-    plt.tight_layout(rect=[0, 0.03, 1, 0.95]) # Ajustar para el supertítulo
-    plt.show()
+    plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+    pos_output_path = os.path.join(output_folder, f"{base_filename}_position.png")
+    plt.savefig(pos_output_path)
+    print(f"Gráfico de posición guardado en: {pos_output_path}")
+    plt.close(fig_pos)
 
     # --- Gráfico de Velocidad ---
     if 'vx' in df.columns and df['vx'].notna().any():
@@ -54,7 +61,10 @@ def plot_kinematics(df: pd.DataFrame):
         axs_vel[1].legend()
 
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-        plt.show()
+        vel_output_path = os.path.join(output_folder, f"{base_filename}_velocity.png")
+        plt.savefig(vel_output_path)
+        print(f"Gráfico de velocidad guardado en: {vel_output_path}")
+        plt.close(fig_vel)
     else:
         print("No se graficó la velocidad (datos insuficientes o NaN).")
 
@@ -63,19 +73,22 @@ def plot_kinematics(df: pd.DataFrame):
         fig_acc, axs_acc = plt.subplots(1, 2, figsize=(12, 5), sharex=True)
         fig_acc.suptitle('Aceleración vs Tiempo')
 
-        axs_acc[0].plot(df['time'], df['ax'], marker='.', linestyle='-', label='Ax (px/s^2)')
-        axs_acc[0].set_ylabel('Aceleración X (px/s^2)')
+        axs_acc[0].plot(df['time'], df['ax'], marker='.', linestyle='-', label='Ax (px/s²)')
+        axs_acc[0].set_ylabel('Aceleración X (px/s²)')
         axs_acc[0].set_xlabel('Tiempo (s)')
         axs_acc[0].grid(True)
         axs_acc[0].legend()
 
-        axs_acc[1].plot(df['time'], df['ay'], marker='.', linestyle='-', color='orange', label='Ay (px/s^2)')
-        axs_acc[1].set_ylabel('Aceleración Y (px/s^2)')
+        axs_acc[1].plot(df['time'], df['ay'], marker='.', linestyle='-', color='orange', label='Ay (px/s²)')
+        axs_acc[1].set_ylabel('Aceleración Y (px/s²)')
         axs_acc[1].set_xlabel('Tiempo (s)')
         axs_acc[1].grid(True)
         axs_acc[1].legend()
 
         plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-        plt.show()
+        acc_output_path = os.path.join(output_folder, f"{base_filename}_acceleration.png")
+        plt.savefig(acc_output_path)
+        print(f"Gráfico de aceleración guardado en: {acc_output_path}")
+        plt.close(fig_acc)
     else:
         print("No se graficó la aceleración (datos insuficientes o NaN).")
