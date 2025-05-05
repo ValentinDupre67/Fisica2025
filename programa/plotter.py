@@ -77,5 +77,9 @@ def plot_kinematics(data_df):
 
     plt.tight_layout(rect=[0, 0.03, 1, 0.95])
     print("Mostrando gráficos con altura normalizada...")
+    # Guardar el plot en un archivo PNG antes de mostrarlo
+    output_path = 'kinematics_plot.png'
+    fig.savefig(output_path)
+    print(f"Gráfico guardado en '{output_path}'")
     plt.show()
     print("Gráficos cerrados.")
