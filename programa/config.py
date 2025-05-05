@@ -4,7 +4,7 @@ Archivo de configuración para el tracker de baloncesto.
 """
 
 # --- Parámetros de Video y Salida ---
-VIDEO_PATH = './video/entrada/PeloAz.mp4'  # ¡¡¡IMPORTANTE: Cambia esto a la ruta de tu video!!!
+VIDEO_PATH = './video/entrada/lastdance.mp4'  # ¡¡¡IMPORTANTE: Cambia esto a la ruta de tu video!!!
 OUTPUT_CSV = 'tracking_data_processed.csv'
 
 # --- Parámetros de Tracking ---
